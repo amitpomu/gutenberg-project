@@ -1,0 +1,19 @@
+/**
+ * ----------------------------------------------------------------------------
+ * #.# Frontend CSS
+ *
+ * BLOCK: 01-basic block CSS for the editor & front end.
+ * ----------------------------------------------------------------------------
+ */
+
+.wp-block-text-amit-text {
+	color: #fff;
+	background: #000;
+	border: 0.2rem solid red;
+	padding: 2rem;
+}
+.link {
+	color: #fff;
+	padding:25px;
+	background: #555;
+}
