@@ -1,0 +1,13 @@
+#about-us-section .has-featured-image .featured-image,
+#about-us-section .has-featured-image .entry-container {
+    width: 50%;
+    float: left;
+}
+ #about-us-section article.has-featured-image {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#about-us-section .entry-container {
+    padding-left: 80px;
+}

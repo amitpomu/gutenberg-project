@@ -1,13 +1,13 @@
 <?php
 /**
- * gutenbergtheme functions and definitions
+ * TP Gutenberg functions and definitions
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package Gutenbergtheme
+ * @package TP_Gutenberg
  */
 
-if ( ! function_exists( 'gutenbergtheme_setup' ) ) :
+if ( ! function_exists( 'tp_gutenberg_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
@@ -15,14 +15,14 @@ if ( ! function_exists( 'gutenbergtheme_setup' ) ) :
 	 * runs before the init hook. The init hook is too late for some features, such
 	 * as indicating support for post thumbnails.
 	 */
-	function gutenbergtheme_setup() {
+	function tp_gutenberg_setup() {
 		/*
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
-		 * If you're building a theme based on gutenbergtheme, use a find and replace
-		 * to change 'gutenbergtheme' to the name of your theme in all the template files.
+		 * If you're building a theme based on TP Gutenberg, use a find and replace
+		 * to change 'tp-gutenberg' to the name of your theme in all the template files.
 		 */
-		load_theme_textdomain( 'gutenbergtheme', get_template_directory() . '/languages' );
+		load_theme_textdomain( 'tp-gutenberg', get_template_directory() . '/languages' );
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support( 'automatic-feed-links' );
@@ -44,7 +44,7 @@ if ( ! function_exists( 'gutenbergtheme_setup' ) ) :
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
-			'menu-1' => esc_html__( 'Primary', 'gutenbergtheme' ),
+			'menu-1' => esc_html__( 'Primary', 'tp-gutenberg' ),
 		) );
 
 		/*
@@ -60,7 +60,7 @@ if ( ! function_exists( 'gutenbergtheme_setup' ) ) :
 		) );
 
 		// Set up the WordPress core custom background feature.
-		add_theme_support( 'custom-background', apply_filters( '_s_custom_background_args', array(
+		add_theme_support( 'custom-background', apply_filters( 'tp_gutenberg_custom_background_args', array(
 			'default-color' => 'ffffff',
 			'default-image' => '',
 		) ) );
@@ -80,18 +80,14 @@ if ( ! function_exists( 'gutenbergtheme_setup' ) ) :
 			'flex-height' => true,
 		) );
 
-		add_theme_support( 'gutenberg', array(
-			'wide-images' => true,
-   		'colors' => array(
-				'#0073aa',
-				'#229fd8',
-				'#eee',
-				'#444',
-			),
-		) );
+		// Enable support for footer widgets.
+		add_theme_support( 'footer-widgets', 3 );
+
+		// Load Footer Widget Support.
+		require_if_theme_supports( 'footer-widgets', get_template_directory() . '/inc/footer-widgets.php' );
 	}
 endif;
-add_action( 'after_setup_theme', 'gutenbergtheme_setup' );
+add_action( 'after_setup_theme', 'tp_gutenberg_setup' );
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -100,56 +96,44 @@ add_action( 'after_setup_theme', 'gutenbergtheme_setup' );
  *
  * @global int $content_width
  */
-function gutenbergtheme_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'gutenbergtheme_content_width', 640 );
+function tp_gutenberg_content_width() {
+	$GLOBALS['content_width'] = apply_filters( 'tp_gutenberg_content_width', 640 );
 }
-add_action( 'after_setup_theme', 'gutenbergtheme_content_width', 0 );
+add_action( 'after_setup_theme', 'tp_gutenberg_content_width', 0 );
 
 /**
- * Register Google Fonts
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function gutenbergtheme_fonts_url() {
-    $fonts_url = '';
-
-    /* Translators: If there are characters in your language that are not
-	 * supported by Karla, translate this to 'off'. Do not translate
-	 * into your own language.
-	 */
-	$notoserif = esc_html_x( 'on', 'Noto Serif font: on or off', 'gutenbergtheme' );
-
-	if ( 'off' !== $notoserif ) {
-		$font_families = array();
-		$font_families[] = 'Noto Serif:400,400italic,700,700italic';
-
-		$query_args = array(
-			'family' => urlencode( implode( '|', $font_families ) ),
-			'subset' => urlencode( 'latin,latin-ext' ),
-		);
-
-		$fonts_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
-	}
-
-	return $fonts_url;
-
+function tp_gutenberg_widgets_init() {
+	register_sidebar( array(
+		'name'          => esc_html__( 'Sidebar', 'tp-gutenberg' ),
+		'id'            => 'sidebar-1',
+		'description'   => esc_html__( 'Add widgets here.', 'tp-gutenberg' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	) );
 }
+add_action( 'widgets_init', 'tp_gutenberg_widgets_init' );
 
 /**
  * Enqueue scripts and styles.
  */
-function gutenbergtheme_scripts() {
-	wp_enqueue_style( 'gutenbergbase-style', get_stylesheet_uri() );
+function tp_gutenberg_scripts() {
+	wp_enqueue_style( 'tp-gutenberg-style', get_stylesheet_uri() );
 
-	wp_enqueue_style( 'gutenbergthemeblocks-style', get_template_directory_uri() . '/css/blocks.css');
+	wp_enqueue_script( 'tp-gutenberg-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'gutenbergtheme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
-
-	wp_enqueue_script( 'gutenbergtheme-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+	wp_enqueue_script( 'tp-gutenberg-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'gutenbergtheme_scripts' );
+add_action( 'wp_enqueue_scripts', 'tp_gutenberg_scripts' );
 
 /**
  * Implement the Custom Header feature.
@@ -171,11 +155,20 @@ require get_template_directory() . '/inc/template-functions.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
-// amit block
-require get_template_directory() . '/inc/amit-block/index.php';
+/**
+ * Custom Blocks.
+ */
+// banner block
+require get_template_directory() . '/blocks/banner-block/index.php';
 
-// recipe card block
-require get_template_directory() . '/inc/recipe-card/index.php';
+// about block
+require get_template_directory() . '/blocks/about-block/index.php';
+
+// cta block
+require get_template_directory() . '/blocks/cta-block/index.php';
+
+// services block
+require get_template_directory() . '/blocks/services-block/index.php';
 
 /**
  * Load Jetpack compatibility file.

@@ -7,9 +7,9 @@
  * and that other 'pages' on your WordPress site may use a
  * different template.
  *
- * @link https://codex.wordpress.org/Template_Hierarchy
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Gutenbergtheme
+ * @package TP_Gutenberg
  */
 
 get_header(); ?>
@@ -34,4 +34,5 @@ get_header(); ?>
 	</div><!-- #primary -->
 
 <?php
+get_sidebar();
 get_footer();

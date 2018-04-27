@@ -1,0 +1,22 @@
+#masthead .wrapper {
+    max-width: 1170px;
+}
+.wp-block-tp-gutenberg-banner {
+    min-height: 400px;
+}
+#header-image .wrapper {
+    max-width: 1170px;
+    text-align: left;
+    width: 90%;
+}
+#header-image h2 {
+    font-size: 45px;
+    color: #000;
+    margin: 0;
+    max-width: 550px;
+    font-weight: 500;
+}
+#header-image .btn {
+    color: red;
+    font-size: 24px
+}

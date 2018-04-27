@@ -6,8 +6,9 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package Gutenbergtheme
+ * @package TP_Gutenberg
  */
+
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -19,35 +20,34 @@
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class( 'lite-version relative-header classic-menu' ); ?>>
 <div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'gutenbergtheme' ); ?></a>
-		<header id="masthead" class="site-header">
-			<div class="site-branding">
-				<?php
-				the_custom_logo();
-				if ( is_front_page() && is_home() ) : ?>
-					<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<?php else : ?>
-					<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php
-				endif;
+	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'tp-gutenberg' ); ?></a>
 
-				$description = get_bloginfo( 'description', 'display' );
-				if ( $description || is_customize_preview() ) : ?>
-					<p class="site-description"><?php echo $description; /* WPCS: xss ok. */ ?></p>
-				<?php
-				endif; ?>
-			</div><!-- .site-branding -->
+	<header id="masthead" class="site-header" role="banner">
+        <div class="wrapper">
+            <div class="site-branding">
+                <div class="site-branding-text">
+                    <h1 class="site-title"><a href="<?php echo esc_url( home_url('/') ) ?>" rel="home">test.</a></h1>
+                </div><!-- .site-branding-text -->
+            </div><!-- .site-branding -->
 
-			<nav id="site-navigation" class="main-navigation">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'theme' ); ?></button>
-				<?php
-					wp_nav_menu( array(
-						'theme_location' => 'menu-1',
-						'menu_id'        => 'primary-menu',
-					) );
-				?>
-			</nav><!-- #site-navigation -->
-		</header><!-- #masthead -->
+            <div id="site-header-menu" class="site-header-menu">
+                <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                    <span class="icon"></span>
+                    <span class="menu-label">Menu</span>
+                </button>
+                <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+	                <?php
+						wp_nav_menu( array(
+							'theme_location' => 'menu-1',
+							'menu_id'        => 'primary-menu',
+							'menu_class'        => 'menu nav-menu',
+						) );
+					?>
+                </nav><!-- .main-navigation-->
+            </div><!-- #site-header-menu -->
+        </div><!-- .wrapper -->
+    </header><!-- #masthead -->
+
 	<div id="content" class="site-content">

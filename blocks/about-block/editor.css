@@ -1,0 +1,11 @@
+#about-us-section .has-featured-image .featured-image,
+#about-us-section .has-featured-image .entry-container {
+    width: 50%;
+    float: left;
+}
+#about-us-section .has-featured-image .entry-container {
+	padding: 0 10px 0 0;
+}
+.wp-block-tp-gutenberg-about {
+    min-height: 400px;
+}
